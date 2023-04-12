@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Sergio
  */
-@WebServlet(name = "Operacion", urlPatterns = {"/Operacion"})
-public class Operacion extends HttpServlet {
+@WebServlet(name = "Calculadora", urlPatterns = {"/Calculadora"})
+public class Calculadora extends HttpServlet {
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -31,25 +31,6 @@ public class Operacion extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html lang=\"es\">");
-            out.println("<head>");
-            out.println("<title>Servlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            if (request.getParameter("param") != null) {
-                out.println("<h1>El valor del par&aacute;metro es: " + request.getParameter("param") + "</h1>");
-            } else {
-                out.println("<h1>El contexto es: " + request.getContextPath() + "</h1>");
-            }
-            out.println("<p><a href=\".\">Volver</a></p>");            
-            out.println("</body>");
-            out.println("</html>");
-        }
     }
 
     /**
@@ -63,17 +44,42 @@ public class Operacion extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        int op1 = Integer.parseInt(request.getParameter("op1"));
+        int op2 = Integer.parseInt(request.getParameter("op2"));
+        String operacion = request.getParameter("operacion");
+        int result = 0;
+
+        switch (operacion) {
+            case "Sumar":
+                result = op1 + op2;
+                break;
+            case "Restar":
+                result = op1 - op2;
+                break;
+            case "Multiplicar":
+                result = op1 * op2;
+                break;
+            case "Dividir":
+                result = op1 / op2;
+                break;
+            default:
+                result = 0;
+                return;
+        }
+
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html lang=\"es\">");
             out.println("<head>");
-            out.println("<title>Servlet</title>");
+            out.println("<title>Resultado</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1> El valor del campo oculto es: " + request.getParameter("entrada") + "</h1>");
-            out.println("<p><a href=\".\">Volver</a></p>");
+            out.println("<h1>Resultado de la operaci&oacute;n:</h1>");
+            out.println("<h3>Resultado: " + result + "</h3>");
+            out.println("<p><a href=\"HTML/calculadora.html\">Volver</a></p>");
             out.println("</body>");
             out.println("</html>");
         }
