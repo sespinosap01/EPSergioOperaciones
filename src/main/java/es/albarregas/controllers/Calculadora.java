@@ -49,19 +49,24 @@ public class Calculadora extends HttpServlet {
         int op2 = Integer.parseInt(request.getParameter("op2"));
         String operacion = request.getParameter("operacion");
         int result = 0;
+        String textResult = "";
 
         switch (operacion) {
             case "Sumar":
                 result = op1 + op2;
+                textResult = "La suma de " + op1 + " + " + op2 + " es: " + result;
                 break;
             case "Restar":
                 result = op1 - op2;
+                textResult = "La resta de " + op1 + " - " + op2 + " es: " + result;
                 break;
             case "Multiplicar":
                 result = op1 * op2;
+                textResult="La multiplicacion de "+ op1 +" * "+ op2 +" es: "+ result;                
                 break;
             case "Dividir":
                 result = op1 / op2;
+                textResult="La division de "+ op1 +" / "+ op2 +" es: "+ result;                
                 break;
             default:
                 result = 0;
@@ -78,7 +83,7 @@ public class Calculadora extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Resultado de la operaci&oacute;n:</h1>");
-            out.println("<h3>Resultado: " + result + "</h3>");
+            out.println("<h3>" + textResult + "</h3>");
             out.println("<p><a href=\"HTML/calculadora.html\">Volver</a></p>");
             out.println("</body>");
             out.println("</html>");
