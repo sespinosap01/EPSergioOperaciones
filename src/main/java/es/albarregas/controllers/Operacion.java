@@ -38,6 +38,7 @@ public class Operacion extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html lang=\"es\">");
             out.println("<head>");
+            out.println("<link rel=\"stylesheet\" href=\"CSS/style.css\">\n");            
             out.println("<title>Servlet</title>");
             out.println("</head>");
             out.println("<body>");
@@ -69,6 +70,7 @@ public class Operacion extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html lang=\"es\">");
             out.println("<head>");
+            out.println("<link rel=\"stylesheet\" href=\"CSS/style.css\">\n");                        
             out.println("<title>Servlet</title>");
             out.println("</head>");
             out.println("<body>");

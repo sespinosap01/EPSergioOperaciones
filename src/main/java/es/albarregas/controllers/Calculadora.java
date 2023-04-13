@@ -45,32 +45,39 @@ public class Calculadora extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int op1 = Integer.parseInt(request.getParameter("op1"));
-        int op2 = Integer.parseInt(request.getParameter("op2"));
-        String operacion = request.getParameter("operacion");
+        String opt1 = request.getParameter("op1");
+        String opt2 = request.getParameter("op2");
         int result = 0;
         String textResult = "";
 
-        switch (operacion) {
-            case "Sumar":
-                result = op1 + op2;
-                textResult = "La suma de " + op1 + " + " + op2 + " es: " + result;
-                break;
-            case "Restar":
-                result = op1 - op2;
-                textResult = "La resta de " + op1 + " - " + op2 + " es: " + result;
-                break;
-            case "Multiplicar":
-                result = op1 * op2;
-                textResult="La multiplicacion de "+ op1 +" * "+ op2 +" es: "+ result;                
-                break;
-            case "Dividir":
-                result = op1 / op2;
-                textResult="La division de "+ op1 +" / "+ op2 +" es: "+ result;                
-                break;
-            default:
-                result = 0;
-                return;
+        if (opt1 == null || opt1.isEmpty() || opt2 == null || opt2.isEmpty()) {
+            textResult = "Alguno de los datos introducidos son erroneos";
+
+        } else {
+            int op1 = Integer.parseInt(opt1);
+            int op2 = Integer.parseInt(opt2);
+
+            String operacion = request.getParameter("operacion");
+            switch (operacion) {
+                case "Sumar":
+                    result = op1 + op2;
+                    textResult = "La suma de " + op1 + " + " + op2 + " es: " + result;
+                    break;
+                case "Restar":
+                    result = op1 - op2;
+                    textResult = "La resta de " + op1 + " - " + op2 + " es: " + result;
+                    break;
+                case "Multiplicar":
+                    result = op1 * op2;
+                    textResult = "La multiplicacion de " + op1 + " * " + op2 + " es: " + result;
+                    break;
+                case "Dividir":
+                    result = op1 / op2;
+                    textResult = "La division de " + op1 + " / " + op2 + " es: " + result;
+                    break;
+                default:
+                    return;
+            }
         }
 
         response.setContentType("text/html;charset=UTF-8");
@@ -79,6 +86,7 @@ public class Calculadora extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html lang=\"es\">");
             out.println("<head>");
+            out.println("<link rel=\"stylesheet\" href=\"CSS/style.css\">\n");
             out.println("<title>Resultado</title>");
             out.println("</head>");
             out.println("<body>");
