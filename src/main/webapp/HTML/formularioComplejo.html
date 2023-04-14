@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="es">
+    <head>
+        <title>Formulario complejo</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../CSS/styleFormularioComplejo.css">
+    </head>
+    <body>
+        <h1>Formulario Complejo</h1>
+        <form action="../formularioComplejo" method="post">
+            <fieldset>
+                <legend>Datos Personales</legend>
+                <label for="usuario">Usuario </label>
+                <input type="text" name="usuario"><br><br>
+                <label for="password">Password</label>
+                <input type="password" name="password"><br><br>
+                <label for="edad">Edad</label>
+                <select name="edad">
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                </select>
+            </fieldset>
+            <fieldset>
+                <legend>Otros datos</legend>
+                <p>Estado civil: 
+                    <input type="radio" name="estadoCivil" value="soltero" id="soltero" checked>
+                    <label for="soltero">Soltero/a</label>
+
+                    <input type="radio" name="estadoCivil" value="casado" id="casado">
+                    <label for="casado">Casado/a</label>
+
+                    <input type="radio" name="estadoCivil" value="viudo" id="viudo">
+                    <label for="viudo">Viudo/a</label>
+
+                    <input type="radio" name="estadoCivil" value="divorciado" id="divorciado">
+                    <label for="divorciado">Divorciado/a</label>
+                </p>
+                <br>
+                <h3>Aficiones:</h3>
+                <input type="checkbox" name="aficiones[]" value="deporte" id="deporte">
+                <label for="deporte">Deporte</label><br>
+
+                <input type="checkbox" name="aficiones[]" value="musica" id="musica">
+                <label for="musica">Musica</label><br>
+
+                <input type="checkbox" name="aficiones[]" value="informatica" id="informatica">
+                <label for="informatica">Informatica</label><br>
+                
+                <input type="checkbox" name="aficiones[]" value="viajes" id="viajes">
+                <label for="viajes">Viajes</label><br>
+
+                <input type="checkbox" name="aficiones[]" value="tiendas" id="tiendas">
+                <label for="tiendas">Tiendas</label><br>
+
+                <input type="checkbox" name="aficiones[]" value="juegos" id="juegos">
+                <label for="juegos">Juegos</label><br>
+
+                <br>
+                <label for="comentarios">Comentarios:</label><br>
+                <textarea name="comentario" cols="50" rows="3"
+                          placeholder="Pon tu comentario..."></textarea>
+            </fieldset>
+            <fieldset>
+                <legend>Medios Tecnológicos</legend>
+                <p>¿Dispones de internet?</p>
+                <input type="radio" name="internetSiNo" value="si" id="si" checked>
+                <label for="si">Sí</label>
+
+                <input type="radio" name="internetSiNo" value="no" id="no">
+                <label for="no">No</label>
+
+                <p> Sistema operativo <br>
+                    <select name="sistemaOperativo" size="4">
+                        <option value="windows">Windows</option>
+                        <option value="linux">Linux</option>
+                        <option value="machintosh">Macintosh</option>
+                        <option value="viajes">Solaris</option>
+                    </select>
+                </p>
+                <input type="hidden" name="digito" value="15">
+            </fieldset>
+            <br>
+
+            <input type="submit" name="enviar" value="Enviar">
+            <input type="reset" name="limpiar" value="Limpiar">
+        </form>
+        <br><br>
+        <a href="../">Volver</a>             
+    </body>
+</html>
