@@ -8,6 +8,7 @@ package es.albarregas.controllers;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -48,61 +49,50 @@ public class formularioComplejo extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        //obtener parametros
-        String usuario = request.getParameter("usuario");
-        String password = request.getParameter("password");
-        String edad = request.getParameter("edad");
-        String estadoCivil = request.getParameter("estadoCivil");
-        //aficiones se guarda en un array ya que puede tener tamaños distintos
-        String[] aficiones = request.getParameterValues("aficiones[]");
-        String comentario = request.getParameter("comentario");
-        String internetSiNo = request.getParameter("internetSiNo");
-        String sistemaOperativo = request.getParameter("sistemaOperativo");
-        String digito = request.getParameter("digito");
-
-        //guardamos los datos en un mapa
         Map<String, String> datosFormulario = new HashMap<>();
+        Enumeration<String> nombresParametros = request.getParameterNames();
+        while (nombresParametros.hasMoreElements()) {
+            String nombreParam = nombresParametros.nextElement();
+            String valorParam = request.getParameter(nombreParam);
+            datosFormulario.put(nombreParam, valorParam);
+        }
 
-        //metemos los datos introducidos en el mapa
-        datosFormulario.put("usuarioKey", usuario);
-        datosFormulario.put("passwordKey", password);
-        datosFormulario.put("edadKey", edad);
-        datosFormulario.put("estadoCivilKey", estadoCivil);
-        datosFormulario.put("aficionesKey", Arrays.toString(aficiones));
-        datosFormulario.put("comentarioKey", comentario);
-        datosFormulario.put("internetSiNoKey", internetSiNo);
-        datosFormulario.put("sistemaOperativoKey", sistemaOperativo);
-        datosFormulario.put("digitoKey", digito);
+        String usuario = datosFormulario.get("usuario");
+        String password = datosFormulario.get("password");
+        String aficiones = datosFormulario.get("aficiones");
+        
+//ARREGLAR AFICIONES //ARREGLAR AFICIONES //ARREGLAR AFICIONES //ARREGLAR AFICIONES
 
-        //accedemos a los datos con la clave, los guardamos y controlamos salidas erroneas
-        String usuarioMostrar = datosFormulario.get("usuarioKey");
+        String comentario = datosFormulario.get("comentario");
+        String sistemaOperativo = datosFormulario.get("sistemaOperativo");
+
+        String usuarioMostrar = datosFormulario.get("usuario");
         if (usuario.length() <= 0) {
             usuarioMostrar = "Sin informacion";
         }
-        String passwordMostrar = datosFormulario.get("passwordKey");
+        String passwordMostrar = datosFormulario.get("password");
         if (password.length() <= 0) {
             passwordMostrar = "Sin informacion";
         }
-        String edadMostrar = datosFormulario.get("edadKey");
-        String estadoCivilMostrar = datosFormulario.get("estadoCivilKey");
-        String aficionesMostrar = datosFormulario.get("aficionesKey");
+        String edadMostrar = datosFormulario.get("edad");
+        String estadoCivilMostrar = datosFormulario.get("estadoCivil");
+        String aficionesMostrar = datosFormulario.get("aficiones");
         if (aficiones == null) {
             aficionesMostrar = "No seleccionado";
         }
-        String comentarioMostrar = datosFormulario.get("comentarioKey");
+        String comentarioMostrar = datosFormulario.get("comentario");
         if (comentario.length() <= 0) {
             comentarioMostrar = "Sin informacion";
         }
-        String internetSiNoMostrar = datosFormulario.get("internetSiNoKey");
-        String sistemaOperativoMostrar = datosFormulario.get("sistemaOperativoKey");
+        String internetSiNoMostrar = datosFormulario.get("internetSiNo");
+        String sistemaOperativoMostrar = datosFormulario.get("sistemaOperativo");
         if (sistemaOperativo == null) {
             sistemaOperativoMostrar = "No seleccionado";
         }
-        String digitoMostrar = datosFormulario.get("digitoKey");
+        String digitoMostrar = datosFormulario.get("digito");
 
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html lang=\"es\">");
             out.println("<head>");
