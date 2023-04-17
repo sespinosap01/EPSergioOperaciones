@@ -7,6 +7,7 @@ package es.albarregas.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,15 +62,40 @@ public class formularioReservas extends HttpServlet {
         String telefono = datos.get("telefono");
         String email = datos.get("email");
         String noches = datos.get("noches");
+        int nochesInt = Integer.parseInt(noches);
         String fEntradaDia = datos.get("fEntradaDia");
+        int fEntradaDiaInt = Integer.parseInt(fEntradaDia);
         String fEntradaMes = datos.get("fEntradaMes");
         String tipoHabitacion = datos.get("tipoHabitacion");
-        String servicios = datos.get("servicios");
+        String[] servicios = request.getParameterValues("servicios[]");
         String comentario = datos.get("comentario");
+
+        //mapeo para establecer cuantos dias tienen los meses
+        Map<Integer, Integer> diasPorMes = new HashMap<>();
+        diasPorMes.put(0, -1); // Enero
+        diasPorMes.put(1, 31); // Enero
+        diasPorMes.put(2, 28); // Febrero
+        diasPorMes.put(3, 31); // Marzo
+        diasPorMes.put(4, 30); // Abril
+        diasPorMes.put(5, 31); // Mayo
+        diasPorMes.put(6, 30); // Junio
+        diasPorMes.put(7, 31); // Julio
+        diasPorMes.put(8, 31); // Agosto
+        diasPorMes.put(9, 30); // Septiembre
+        diasPorMes.put(10, 31); // Octubre
+        diasPorMes.put(11, 30); // Noviembre
+        diasPorMes.put(12, 31); // Diciembre
+        int mesSeleccionado = Integer.parseInt(request.getParameter("fEntradaMes"));
+        int diaSeleccionado = Integer.parseInt(request.getParameter("fEntradaDia"));
+        int diasPermitidos = diasPorMes.get(mesSeleccionado);
+
+        boolean camposCorrectos = false;
+        String cadenaReadOnly ="";
+        if (camposCorrectos == true) {
+            cadenaReadOnly = "readonly";
+        }
         
-        //ARREGLAR GUARDADO DE FECHAS, INPUTS RADIO Y CHECKBOX
-        //AÑADIR FOTOS DE CHECK Y ERROR
-        //CONTROLAR LOS ERRORES
+        //ARREGLAR READONLY AL ESTAR TODO BIEN
 
         try (PrintWriter out = response.getWriter()) {
             out.println("<html>");
@@ -85,64 +111,196 @@ public class formularioReservas extends HttpServlet {
             out.println("<fieldset>");
             out.println("<legend>Datos Personales</legend>");
             out.println("<label for=\"nombre\">Nombre </label><br>");
-            out.println("<input type=\"text\" name=\"nombre\" placeholder=\"Ej. Sergio\" value=\"" + nombre + "\"><br><br>");
+            out.println("<div class=\"lineaControl\">");
+            out.println("<input type=\"text\" " + cadenaReadOnly + " name=\"nombre\" placeholder=\"Ej. Sergio\" value=\"" + nombre + "\">");
+            if (nombre.length() <= 0) {
+                out.println("<img src=\"IMG/error.png\" width=\"15px\">");
+                camposCorrectos = false;
+            } else {
+                out.println("<img src=\"IMG/check.png\" width=\"15px\">");
+            }
+            out.println("</div>");
+            out.println("<br>");
             out.println("<label for=\"apellidos\">Apellidos</label><br>");
-            out.println("<input type=\"text\" name=\"apellidos\" placeholder=\"Ej. Espinosa Pascua\" value=\"" + apellidos + "\"><br><br>");
+            out.println("<div class=\"lineaControl\">");
+            out.println("<input type=\"text\" name=\"apellidos\" placeholder=\"Ej. Espinosa Pascua\" value=\"" + apellidos + "\">");
+            if (apellidos.length() <= 0) {
+                out.println("<img src=\"IMG/error.png\" width=\"15px\">");
+                camposCorrectos = false;
+            } else {
+                out.println("<img src=\"IMG/check.png\" width=\"15px\">");
+            }
+            out.println("</div>");
+            out.println("<br>");
             out.println("<label for=\"telefono\">Tel&eacute;fono de contacto</label><br>");
-            out.println("<input type=\"text\" name=\"telefono\" placeholder=\"Ej. 924558811\" value=\"" + telefono + "\"><br><br>");
+            out.println("<div class=\"lineaControl\">");
+            out.println("<input type=\"text\" name=\"telefono\" placeholder=\"Ej. 924558811\" value=\"" + telefono + "\">");
+            if (telefono.length() <= 0) {
+                out.println("<img src=\"IMG/error.png\" width=\"15px\">");
+                camposCorrectos = false;
+            } else {
+                out.println("<img src=\"IMG/check.png\" width=\"15px\">");
+            }
+            out.println("</div>");
+            out.println("<br>");
             out.println("<label for=\"email\">Correo electr&oacute;nico</label><br>");
-            out.println("<input type=\"text\" name=\"email\" placeholder=\"Ej. usuario@gmail.com\" value=\"" + email + "\"><br><br>");
+            out.println("<div class=\"lineaControl\">");
+            out.println("<input type=\"text\" name=\"email\" placeholder=\"Ej. usuario@gmail.com\" value=\"" + email + "\">");
+            if (email.length() <= 0) {
+                out.println("<img src=\"IMG/error.png\" width=\"15px\">");
+                camposCorrectos = false;
+            } else {
+                out.println("<img src=\"IMG/check.png\" width=\"15px\">");
+            }
+            out.println("</div>");
+            out.println("<br>");
             out.println("</fieldset>");
             out.println("<fieldset>");
             out.println("<legend>Datos de Reserva</legend>");
             out.println("<label for=\"noches\">N&uacute;mero de noches</label><br>");
-            out.println("<input type=\"number\" name=\"noches\" value=\"" + noches + "\"><br><br>");
+            out.println("<div class=\"lineaControl\">");
+            out.println("<input type=\"number\" name=\"noches\" value=\"" + nochesInt + "\">");
+            if (nochesInt <= 0) {
+                out.println("<img src=\"IMG/error.png\" width=\"15px\">");
+                camposCorrectos = false;
+            } else {
+                out.println("<img src=\"IMG/check.png\" width=\"15px\">");
+            }
+            out.println("</div>");
+            out.println("<br>");
             out.println("<label for=\"fEntrada\">Fecha de entrada</label><br>");
             out.println("<select name=\"fEntradaDia\">");
-            out.println("<option value=\"0\">Elige d&iacute;a </option>");
-            out.println("<option value=\"" + fEntradaDia + "\">\"" + fEntradaDia + "\"</option>");
+            if (fEntradaDiaInt == 0) {
+                out.println("<option value=\"0\">Elige d&iacute;a</option>");
+            } else {
+                out.println("<option value=\"" + fEntradaDiaInt + "\">" + fEntradaDiaInt + "</option>");
+            }
             for (int i = 1; i <= 31; i++) {
                 out.println("<option value=\"" + i + "\">" + i + "</option>");
             }
             out.println("</select>");
             out.println("<select name=\"fEntradaMes\">");
-            out.println("<option value=\"0\">Elige mes</option>");
-            out.println("<option value=\"" + fEntradaMes + "\">\"" + fEntradaMes + "\"</option>");
-            out.println("<option value=\"Enero\">Enero</option>");
-            out.println("<option value=\"Febrero\">Febrero</option>");
-            out.println("<option value=\"Marzo\">Marzo</option>");
-            out.println("<option value=\"Abril\">Abril</option>");
-            out.println("<option value=\"Mayo\">Mayo</option>");
-            out.println("<option value=\"Junio\">Junio</option>");
-            out.println("<option value=\"Julio\">Julio</option>");
-            out.println("<option value=\"Agosto\">Agosto</option>");
-            out.println("<option value=\"Septiembre\">Septiembre</option>");
-            out.println("<option value=\"Octubre\">Octubre</option>");
-            out.println("<option value=\"Noviembre\">Noviembre</option>");
-            out.println("<option value=\"Diciembre\">Diciembre</option>");
+            out.println("<div class=\"lineaControl\">");
+            if (fEntradaMes.equals("Elige mes")) {
+                out.println("<option value=\"0\" selected >Elige mes</option>");
+            } else {
+                String nombreMes = "";
+                switch (fEntradaMes) {
+                    case "1":
+                        nombreMes = "Enero";
+                        break;
+                    case "2":
+                        nombreMes = "Febrero";
+                        break;
+                    case "3":
+                        nombreMes = "Marzo";
+                        break;
+                    case "4":
+                        nombreMes = "Abril";
+                        break;
+                    case "5":
+                        nombreMes = "Mayo";
+                        break;
+                    case "6":
+                        nombreMes = "Junio";
+                        break;
+                    case "7":
+                        nombreMes = "Julio";
+                        break;
+                    case "8":
+                        nombreMes = "Agosto";
+                        break;
+                    case "9":
+                        nombreMes = "Septiembre";
+                        break;
+                    case "10":
+                        nombreMes = "Octubre";
+                        break;
+                    case "11":
+                        nombreMes = "Noviembre";
+                        break;
+                    case "12":
+                        nombreMes = "Diciembre";
+                        break;
+                    default:
+                        nombreMes = "Elige mes";
+                        break;
+                }
+                out.println("<option value=\"" + fEntradaMes + "\">" + nombreMes + "</option>");
+            }
+            out.println("<option value=\"1\">Enero</option>");
+            out.println("<option value=\"2\">Febrero</option>");
+            out.println("<option value=\"3\">Marzo</option>");
+            out.println("<option value=\"4\">Abril</option>");
+            out.println("<option value=\"5\">Mayo</option>");
+            out.println("<option value=\"6\">Junio</option>");
+            out.println("<option value=\"7\">Julio</option>");
+            out.println("<option value=\"8\">Agosto</option>");
+            out.println("<option value=\"9\">Septiembre</option>");
+            out.println("<option value=\"10\">Octubre</option>");
+            out.println("<option value=\"11\">Noviembre</option>");
+            out.println("<option value=\"12\">Diciembre</option>");
             out.println("</select>");
+            if (diaSeleccionado > diasPermitidos) {
+                out.println("<img src=\"IMG/error.png\" width=\"15px\">");
+                camposCorrectos = false;
+            } else {
+                out.println("<img src=\"IMG/check.png\" width=\"15px\">");
+            }
+            out.println("</div>");
             out.println("<br><br>");
             out.println("<h3>Tipo de habitaci&oacute;n: </h3>");
             out.println("<p>");
-            out.println("<input type=\"radio\" name=\"tipoHabitacion\" value=\"simple\" id=\"simple\" checked>");
+            if (tipoHabitacion != null && tipoHabitacion.equals("simple")) {
+                out.println("<input type=\"radio\" name=\"tipoHabitacion\" value=\"simple\" id=\"simple\" checked>");
+            } else {
+                out.println("<input type=\"radio\" name=\"tipoHabitacion\" value=\"simple\" id=\"simple\">");
+            }
             out.println("<label for=\"simple\">Simple</label>");
-            out.println("<input type=\"radio\" name=\"tipoHabitacion\" value=\"doble\" id=\"doble\">");
+
+            if (tipoHabitacion != null && tipoHabitacion.equals("doble")) {
+                out.println("<input type=\"radio\" name=\"tipoHabitacion\" value=\"doble\" id=\"doble\" checked>");
+            } else {
+                out.println("<input type=\"radio\" name=\"tipoHabitacion\" value=\"doble\" id=\"doble\">");
+            }
             out.println("<label for=\"doble\">Doble</label>");
-            out.println("<input type=\"radio\" name=\"tipoHabitacion\" value=\"matrimonio\" id=\"matrimonio\">");
+
+            if (tipoHabitacion != null && tipoHabitacion.equals("matrimonio")) {
+                out.println("<input type=\"radio\" name=\"tipoHabitacion\" value=\"matrimonio\" id=\"matrimonio\" checked>");
+            } else {
+                out.println("<input type=\"radio\" name=\"tipoHabitacion\" value=\"matrimonio\" id=\"matrimonio\">");
+            }
             out.println("<label for=\"matrimonio\">Matrimonio</label>");
             out.println("</p>");
             out.println("<br>");
             out.println("<h3>Servicios adicionales</h3>");
-            out.println("<input type=\"checkbox\" name=\"servicios\" value=\"desayuno\" id=\"desayuno\">");
+            if (servicios != null && Arrays.asList(servicios).contains("desayuno")) {
+                out.println("<input type=\"checkbox\" name=\"servicios[]\" value=\"desayuno\" id=\"desayuno\" checked>");
+            } else {
+                out.println("<input type=\"checkbox\" name=\"servicios[]\" value=\"desayuno\" id=\"desayuno\">");
+            }
             out.println("<label for=\"desayuno\">Desayuno</label><br>");
-            out.println("<input type=\"checkbox\" name=\"servicios\" value=\"comida\" id=\"comida\">");
+            if (servicios != null && Arrays.asList(servicios).contains("comida")) {
+                out.println("<input type=\"checkbox\" name=\"servicios[]\" value=\"comida\" id=\"comida\" checked>");
+            } else {
+                out.println("<input type=\"checkbox\" name=\"servicios[]\" value=\"comida\" id=\"comida\">");
+            }
             out.println("<label for=\"comida\">Comida</label><br>");
-            out.println("<input type=\"checkbox\" name=\"servicios\" value=\"cena\" id=\"cena\">");
+            if (servicios != null && Arrays.asList(servicios).contains("cena")) {
+                out.println("<input type=\"checkbox\" name=\"servicios[]\" value=\"cena\" id=\"cena\" checked>");
+            } else {
+                out.println("<input type=\"checkbox\" name=\"servicios[]\" value=\"cena\" id=\"cena\">");
+            }
             out.println("<label for=\"cena\">Cena</label><br>");
-            out.println("<input type=\"checkbox\" name=\"servicios\" value=\"camaSupletoria\" id=\"camaSupletoria\">");
-            out.println("<label for=\"camaSupletoria\">Cama Supletoria</label><br><br>");
+            if (servicios != null && Arrays.asList(servicios).contains("camaSupletoria")) {
+                out.println("<input type=\"checkbox\" name=\"servicios[]\" value=\"camaSupletoria\" id=\"camaSupletoria\" checked>");
+            } else {
+                out.println("<input type=\"checkbox\" name=\"servicios[]\" value=\"camaSupletoria\" id=\"camaSupletoria\">");
+            }
+            out.println("<label for=\"camaSupletoria\">Cama Supletoria</label><br>");
+            out.println("<br>");
             out.println("<label for=\"comentario\">Comentarios:</label><br>");
-            out.println("<textarea name=\"comentario\" cols=\"50\" rows=\"3\" placeholder=\"Escribe aqu&iacute; tus comentarios...\">"+ comentario +"</textarea><br>");
+            out.println("<textarea name=\"comentario\" cols=\"50\" rows=\"3\" placeholder=\"Escribe aqu&iacute; tus comentarios...\">" + comentario + "</textarea><br>");
             out.println("</fieldset>");
             out.println("<br>");
             out.println("<input type=\"submit\" name=\"enviar\" value=\"Enviar Formulario\">");

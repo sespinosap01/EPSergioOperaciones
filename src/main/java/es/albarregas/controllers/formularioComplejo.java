@@ -7,7 +7,6 @@ package es.albarregas.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,10 +58,9 @@ public class formularioComplejo extends HttpServlet {
 
         String usuario = datosFormulario.get("usuario");
         String password = datosFormulario.get("password");
-        String aficiones = datosFormulario.get("aficiones");
-        
-//ARREGLAR AFICIONES //ARREGLAR AFICIONES //ARREGLAR AFICIONES //ARREGLAR AFICIONES
+        String[] aficiones = request.getParameterValues("aficiones[]");
 
+//ARREGLAR AFICIONES //ARREGLAR AFICIONES //ARREGLAR AFICIONES //ARREGLAR AFICIONES
         String comentario = datosFormulario.get("comentario");
         String sistemaOperativo = datosFormulario.get("sistemaOperativo");
 
@@ -76,8 +74,10 @@ public class formularioComplejo extends HttpServlet {
         }
         String edadMostrar = datosFormulario.get("edad");
         String estadoCivilMostrar = datosFormulario.get("estadoCivil");
-        String aficionesMostrar = datosFormulario.get("aficiones");
-        if (aficiones == null) {
+        String aficionesMostrar = "";
+        if (aficiones != null) {
+            aficionesMostrar = String.join(", ", aficiones);
+        } else {
             aficionesMostrar = "No seleccionado";
         }
         String comentarioMostrar = datosFormulario.get("comentario");

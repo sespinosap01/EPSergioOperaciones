@@ -7,7 +7,8 @@ and open the template in the editor.
     Created on : 13-abr-2023, 16:49:10
     Author     : Sergio
 */
-
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
 *{
+    font-family: 'Rubik', sans-serif;
     text-align: center;
 }

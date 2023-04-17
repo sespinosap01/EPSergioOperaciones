@@ -33,7 +33,7 @@ and open the template in the editor.
                 <input type="number" name="noches" value="1"><br><br>
                 <label for="fEntrada">Fecha de entrada</label><br>
                 <select name="fEntradaDia">
-                    <option value="0">Elige d&iacute;a </option>
+                    <option value="0">Elige d&iacute;a</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -68,18 +68,18 @@ and open the template in the editor.
                 </select>
                 <select name="fEntradaMes">
                     <option value="0">Elige mes</option>
-                    <option value="">Enero</option>
-                    <option value="">Febrero</option>
-                    <option value="">Marzo</option>
-                    <option value="">Abril</option>
-                    <option value="">Mayo</option>
-                    <option value="">Junio</option>
-                    <option value="">Julio</option>
-                    <option value="">Agosto</option>
-                    <option value="">Septiembre</option>
-                    <option value="">Octubre</option>
-                    <option value="">Noviembre</option>
-                    <option value="">Diciembre</option>
+                    <option value="1">Enero</option>
+                    <option value="2">Febrero</option>
+                    <option value="3">Marzo</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Mayo</option>
+                    <option value="6">Junio</option>
+                    <option value="7">Julio</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
                 </select> 
                 <br><br>
 
@@ -96,16 +96,16 @@ and open the template in the editor.
                 </p>
                 <br>
                 <h3>Servicios adicionales</h3>
-                <input type="checkbox" name="servicios" value="desayuno" id="desayuno">
+                <input type="checkbox" name="servicios[]" value="desayuno" id="desayuno">
                 <label for="desayuno">Desayuno</label><br>
 
-                <input type="checkbox" name="servicios" value="comida" id="comida">
+                <input type="checkbox" name="servicios[]" value="comida" id="comida">
                 <label for="comida">Comida</label><br>
 
-                <input type="checkbox" name="servicios" value="cena" id="cena">
+                <input type="checkbox" name="servicios[]" value="cena" id="cena">
                 <label for="cena">Cena</label><br>
 
-                <input type="checkbox" name="servicios" value="camaSupletoria" id="camaSupletoria">
+                <input type="checkbox" name="servicios[]" value="camaSupletoria" id="camaSupletoria">
                 <label for="camaSupletoria">Cama Supletoria</label><br><br>
 
                 <label for="comentarios">Comentarios:</label><br>
