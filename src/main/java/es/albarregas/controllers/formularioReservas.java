@@ -90,12 +90,12 @@ public class formularioReservas extends HttpServlet {
         int diasPermitidos = diasPorMes.get(mesSeleccionado);
 
         boolean camposCorrectos = false;
-        String cadenaReadOnly ="";
+        String cadenaReadOnly = "";
         if (camposCorrectos == true) {
             cadenaReadOnly = "readonly";
         }
         
-        //ARREGLAR READONLY AL ESTAR TODO BIEN
+        //Faltaría por añadir la funcion de escribir el readonly ya que no funciona correctamente
 
         try (PrintWriter out = response.getWriter()) {
             out.println("<html>");
@@ -135,22 +135,23 @@ public class formularioReservas extends HttpServlet {
             out.println("<label for=\"telefono\">Tel&eacute;fono de contacto</label><br>");
             out.println("<div class=\"lineaControl\">");
             out.println("<input type=\"text\" name=\"telefono\" placeholder=\"Ej. 924558811\" value=\"" + telefono + "\">");
-            if (telefono.length() <= 0) {
+            if (telefono.length() == 9 && (telefono.startsWith("6") || telefono.startsWith("7") || telefono.startsWith("9"))) {
+                out.println("<img src=\"IMG/check.png\" width=\"15px\">");
+
+            } else {
                 out.println("<img src=\"IMG/error.png\" width=\"15px\">");
                 camposCorrectos = false;
-            } else {
-                out.println("<img src=\"IMG/check.png\" width=\"15px\">");
             }
             out.println("</div>");
             out.println("<br>");
             out.println("<label for=\"email\">Correo electr&oacute;nico</label><br>");
             out.println("<div class=\"lineaControl\">");
             out.println("<input type=\"text\" name=\"email\" placeholder=\"Ej. usuario@gmail.com\" value=\"" + email + "\">");
-            if (email.length() <= 0) {
+            if (email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+                out.println("<img src=\"IMG/check.png\" width=\"15px\">");
+            } else {
                 out.println("<img src=\"IMG/error.png\" width=\"15px\">");
                 camposCorrectos = false;
-            } else {
-                out.println("<img src=\"IMG/check.png\" width=\"15px\">");
             }
             out.println("</div>");
             out.println("<br>");
@@ -310,8 +311,8 @@ public class formularioReservas extends HttpServlet {
             out.println("<p><a href=\"HTML/formularioReservas.html\">Volver</a></p>");
             out.println("</body>");
             out.println("</html>");
-
         }
+
     }
 
     /**
