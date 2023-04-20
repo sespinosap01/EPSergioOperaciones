@@ -82,7 +82,7 @@
         <a href="./calculadora.jsp">Volver atras</a>
         <%            }
 //cierre else general
-%>
+        %>
         <br><br>
         <a href="../index.html">Volver al menu</a>
     </body>
