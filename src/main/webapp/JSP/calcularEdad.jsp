@@ -67,7 +67,7 @@
 
             String fraseMostrar = "";
             if (fNac.isAfter(fAct)) {
-                fraseMostrar ="No has nacido";
+                fraseMostrar = "No has nacido";
             } else {
                 fraseMostrar = "<h3>Hola " + nombre + ", tienes " + aniosStr + mesesStr + diasStr + "</h3>";
             }
