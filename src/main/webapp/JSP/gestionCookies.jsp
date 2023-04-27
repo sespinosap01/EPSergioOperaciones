@@ -34,7 +34,8 @@
                 String opcion = request.getParameter("opcion");
                 String nombreIntroducido = request.getParameter("nombreIntroducido").replace(" ", "");
                 String valorIntroducido = request.getParameter("valorIntroducido");
-                String resultado = "asd";
+                StringBuilder resultado = new StringBuilder();
+
                 boolean existeCookie = false;
 
                 Cookie valorCookie = null;
@@ -52,14 +53,14 @@
                         }
 
                         if (existeCookie) {
-                            resultado = "Ya existe una cookie con el nombre: " + nombreIntroducido;
+                            resultado.append("Ya existe una cookie con el nombre: ").append(nombreIntroducido);
                         } else {
                             valorCookie = new Cookie(nombreIntroducido, URLEncoder.encode(valorIntroducido, "UTF-8"));
                             valorCookie.setMaxAge(86400);
                             response.addCookie(valorCookie);
                             String msg = "";
                             msg = URLDecoder.decode(valorCookie.getValue(), "UTF-8");
-                            resultado = "Se ha creado la cookie " + nombreIntroducido + " con el valor: " + msg;
+                            resultado.append("Se ha creado la cookie ").append(nombreIntroducido).append(" con el valor: ").append(valorIntroducido);
                         }
                         break;
                     case "Visualizar":
@@ -69,10 +70,10 @@
                                     valorCookie = arrayCookies[i];
                                     String msg = "";
                                     msg = URLDecoder.decode(valorCookie.getValue(), "UTF-8");
-                                    resultado = "El valor de la cookie " + nombreIntroducido + " es: " + msg;
+                                    resultado.append("El valor de la cookie ").append(nombreIntroducido).append(" es: ").append(msg);
                                     break;
                                 } else {
-                                    resultado = "No existe una cookie con el nombre: " + nombreIntroducido;
+                                    resultado.append("No existe una cookie con el nombre: ").append(nombreIntroducido);
 
                                 }
                             }
@@ -86,13 +87,13 @@
                                     arrayCookies[i].setValue(URLEncoder.encode(valorIntroducido, "UTF-8"));
                                     arrayCookies[i].setMaxAge(86400);
                                     response.addCookie(arrayCookies[i]);
-                                    resultado = "Se ha modificado la cookie " + nombreIntroducido + " con el valor: " + valorIntroducido;
+                                    resultado.append("Se ha modificado la cookie ").append(nombreIntroducido).append(" con el valor: ").append(valorIntroducido);
                                     break;
                                 }
                             }
                         }
                         if (!existeCookie) {
-                            resultado = "La cookie " + nombreIntroducido + " no existe";
+                            resultado.append("La cookie ").append(nombreIntroducido).append(" no existe");
                         }
                         break;
                     case "Eliminar":
@@ -102,16 +103,16 @@
                                     valorCookie = new Cookie(nombreIntroducido, "");
                                     valorCookie.setMaxAge(0);
                                     response.addCookie(valorCookie);
-                                    resultado = "Se ha borrado la cookie: " + nombreIntroducido;
+                                    resultado.append("Se ha borrado la cookie ").append(nombreIntroducido);
                                     break;
                                 } else {
-                                    resultado = "La cookie" + nombreIntroducido + " introducida no existe";
+                                    resultado.append("La cookie ").append(nombreIntroducido).append(" no existe");
                                 }
                             }
                         }
                         break;
                     default:
-                        resultado = "";
+                        resultado.append("");
                 }
 
         %>
